@@ -33,10 +33,10 @@ module.exports = function login () {
 
   return (req: Request, res: Response, next: NextFunction) => {
     verifyPreLoginChallenges(req) // vuln-code-snippet hide-line
-    models.sequelize.query(`SELECT * FROM Users WHERE email = ? AND password = ? AND deletedAt IS NULL`,{
-      replacements:[req.body.email || '',security.hash(req.body.password ||'')],
-    model: UserModel,
-    plain: true
+    models.sequelize.query('SELECT * FROM Users WHERE email = ? AND password = ? AND deletedAt IS NULL', {
+      replacements: [req.body.email || '', security.hash(req.body.password || '')],
+      model: UserModel,
+      plain: true
     })
       .then((authenticatedUser) => { // vuln-code-snippet neutral-line loginAdminChallenge loginBenderChallenge loginJimChallenge
         const user = utils.queryResultToJson(authenticatedUser)
